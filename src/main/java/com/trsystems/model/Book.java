@@ -1,6 +1,7 @@
 package com.trsystems.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -39,7 +40,7 @@ public class Book implements Serializable {
 	private Date launchDate;
 	
 	@Column(name = "price", nullable = false)
-	private Double price;
+	private BigDecimal price;
 	
 	@Transient
 	private String currency;
