@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.trsystems.model.dto.ExchangeDTO;
 
-@FeignClient(name = "exchange-service", url = "localhost:8000")
+//@FeignClient(name = "exchange-service", url = "localhost:8000")
+@FeignClient(name = "exchange-service")
 public interface ExchangeProxy {
 
 	@GetMapping(value = "/exchange-service/{amount}/{from}/{to}")

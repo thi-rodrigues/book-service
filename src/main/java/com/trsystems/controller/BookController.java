@@ -52,7 +52,9 @@ public class BookController {
 		ExchangeDTO exchange = exchangeProxy.getExchange(book.getPrice(), "USD", currency);
 		
 		
-		book.setEnvironment(port + " feign");
+		book.setEnvironment(
+				"BOOK PORT: " + port + 
+				" EXCHANGE PORT: " + exchange.getEnvironment());
 		book.setPrice(exchange.getConversionValue());
 		book.setCurrency(currency);
 		return book;
