@@ -3,8 +3,6 @@ package com.trsystems.model.dto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;

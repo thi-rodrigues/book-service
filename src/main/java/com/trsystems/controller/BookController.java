@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import com.trsystems.environment.InstanceInformationService;
 import com.trsystems.model.Book;
 import com.trsystems.model.dto.ExchangeDTO;
+import com.trsystems.proxy.ExchangeProxy;
 import com.trsystems.repository.BookRepository;
 
 @RestController
@@ -23,6 +24,8 @@ public class BookController {
 	private InstanceInformationService information;
 	@Autowired
 	private BookRepository bookRepository;
+	@Autowired
+	private ExchangeProxy exchangeProxy;
 
 	@GetMapping(value="/{id}/{currency}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public Book findBook(
@@ -33,21 +36,24 @@ public class BookController {
 		
 		var book = bookRepository.findById(id).orElseThrow();
 		
-		HashMap<String, String> map = new HashMap<>();
-		map.put("amount", book.getPrice().toString());
-		map.put("from", "USD");
-		map.put("to", currency);
+		// CHAMADA AO MS EXCHANGE-SERVICE
+//		HashMap<String, String> map = new HashMap<>();
+//		map.put("amount", book.getPrice().toString());
+//		map.put("from", "USD");
+//		map.put("to", currency);
+		
+//		var respponse = new RestTemplate()
+//				.getForEntity("http://localhost:8000/exchange-service/{amount}/{from}/{to}", 
+//						ExchangeDTO.class, 
+//						map);
+//		ExchangeDTO exchangeDTO = respponse.getBody();
 		
 		// CHAMADA AO MS EXCHANGE-SERVICE
-		var respponse = new RestTemplate()
-				.getForEntity("http://localhost:8000/exchange-service/{amount}/{from}/{to}", 
-						ExchangeDTO.class, 
-						map);
+		ExchangeDTO exchange = exchangeProxy.getExchange(book.getPrice(), "USD", currency);
 		
-		ExchangeDTO exchangeDTO = respponse.getBody();
 		
-		book.setEnvironment(port);
-		book.setPrice(exchangeDTO.getConversionValue());
+		book.setEnvironment(port + " feign");
+		book.setPrice(exchange.getConversionValue());
 		book.setCurrency(currency);
 		return book;
 	}
