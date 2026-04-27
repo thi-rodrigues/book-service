@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import io.github.resilience4j.retry.annotation.Retry;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 @RestController
 @RequestMapping("book-service")
@@ -19,7 +19,8 @@ public class FooBarController {
 	
 	@GetMapping("/foo-bar")
 //	@Retry(name = "default")
-	@Retry(name = "foo-bar", fallbackMethod = "fallbackMethod") // Caso der falha mesmo com o retyr, chama o método no fallbackMethod
+//	@Retry(name = "foo-bar", fallbackMethod = "fallbackMethod") // Caso der falha mesmo com o retyr, chama o método no fallbackMethod
+	@CircuitBreaker(name = "default", fallbackMethod = "fallbackMethod") // Caso der falha mesmo com o retyr, chama o método no fallbackMethod
 	public String fooBar() {
 		logger.info("Request to foo-bar is received: {}", ++count);
 		var response = new RestTemplate().getForEntity("http://localhost:8080/foo-bar", String.class);
