@@ -8,7 +8,7 @@ eureka:
 
 spring:
   application:
-    name: boot-service
+    name: book-service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/book_service
