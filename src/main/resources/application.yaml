@@ -11,6 +11,9 @@ resilience4j:
     instances:
       foo-bar: # Nome da sua instância @Retry(name = "foo-bar")
         max-attempts: 7 # Quantas vezes ele vai tentar executar essa atividade até falhar
+        wait-duration: 1s #tempo de espera para nova tentatia "Retry"
+        enable-exponential-backoff: true # habilitar o multiplicador de requisição
+        exponentialBackoffMultiplier: 1 # multiplicador do tempo de espera cada requisição pelo valor "1"
 
 spring:
   application:
