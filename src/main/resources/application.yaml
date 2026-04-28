@@ -14,6 +14,17 @@ resilience4j:
         wait-duration: 1s #tempo de espera para nova tentatia "Retry"
         enable-exponential-backoff: true # habilitar o multiplicador de requisição
         exponentialBackoffMultiplier: 1 # multiplicador do tempo de espera cada requisição pelo valor "1"
+  ratelimiter:
+    instances:
+      default:
+        limit-for-period: 2 #2 requisições
+        limit-refresh-period: 10s #Só pode ter 2 requisições a cada 10 segundos
+  bulkhead:
+    instances:
+      default:
+        max-concurrent-calls: 10
+      foo-bar:
+        max-concurrent-calls: 10
 
 spring:
   application:
