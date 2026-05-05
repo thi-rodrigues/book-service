@@ -10,7 +10,9 @@ import org.springframework.web.client.RestTemplate;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
+@Tag(name = "Foo bar Endopoint")
 @RestController
 @RequestMapping("book-service")
 public class FooBarController {

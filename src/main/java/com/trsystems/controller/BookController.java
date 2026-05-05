@@ -1,14 +1,11 @@
 package com.trsystems.controller;
 
-import java.util.HashMap;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import com.trsystems.environment.InstanceInformationService;
 import com.trsystems.model.Book;
@@ -16,6 +13,10 @@ import com.trsystems.model.dto.ExchangeDTO;
 import com.trsystems.proxy.ExchangeProxy;
 import com.trsystems.repository.BookRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "Book Endopoint")
 @RestController
 @RequestMapping("book-service")
 public class BookController {
@@ -27,7 +28,8 @@ public class BookController {
 	@Autowired
 	private ExchangeProxy exchangeProxy;
 
-	@GetMapping(value="/{id}/{currency}", produces=MediaType.APPLICATION_JSON_VALUE)
+	@Operation(summary = "Find a especifig book by your ID")
+	@GetMapping(value = "/{id}/{currency}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Book findBook(
 			@PathVariable Long id, 
 			@PathVariable String currency) {
